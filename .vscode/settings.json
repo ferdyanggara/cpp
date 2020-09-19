@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "*.tcc": "cpp",
+        "algorithm": "cpp",
+        "random": "cpp",
+        "fstream": "cpp",
+        "streambuf": "cpp",
+        "iostream": "cpp"
+    },
+    "editor.minimap.enabled": false
+}
