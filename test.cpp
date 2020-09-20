@@ -1,12 +1,23 @@
-#include<iostream>
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+
 using namespace std;
 
-int main () {
+int main(int argc, char const *argv[])
+{
+    int player;
 
-cout<<"Welcome to the Nim game!"<<endl;
-int heapA = 0;
-int heapB = 0;
-int heapC = 0;
-
+    char heap = 'A';
+    cout << "Player"
+         << " please select a heap (A, B, or C): ";
+    cin >> heap;
+    while (heap != 'A')
+    {
+        cout << "Invalid Input" << endl;
+        cout << "Player " << player << " please select a heap (A, B, or C): ";
+        cin >> heap;
+    }
+    cout << "true";
     return 0;
-}b
+}
