@@ -13,24 +13,69 @@ int main(int argc, char const *argv[])
     int totalCoins = A + B + C;
     cout << "Welcome to the Nim game!" << endl;
     int rounds = 1;
+    int player;
 
-    while (A && B && C != 0)
+    while (A != 0 || B != 0 || C != 0)
     {
-        int player;
         rounds % 2 == 0 ? player = 2 : player = 1;
         char heap;
         int numOfCoins;
         cout << "Round " << rounds << " A: " << A << " B: " << B << " C: " << C << endl;
         cout << "Player " << player << " please select a heap (A, B, or C): ";
         cin >> heap;
-        while (heap != 'A' && heap != 'B' && heap != 'C')
+        int numLeft;
+        if (heap == 'A')
+        {
+            numLeft = A;
+        }
+        else if (heap == 'B')
+        {
+            numLeft = B;
+        }
+        else if (heap == 'C')
+        {
+            numLeft = C;
+        }
+        while (heap != 'A' && heap != 'B' && heap != 'C' || numLeft == 0)
         {
             cout << "Invalid Input" << endl;
             cout << "Player " << player << " please select a heap (A, B, or C): ";
             cin >> heap;
+            if (heap == 'A')
+            {
+                numLeft = A;
+            }
+            else if (heap == 'B')
+            {
+                numLeft = B;
+            }
+            else if (heap == 'C')
+            {
+                numLeft = C;
+            }
+        }
+        if (heap == 'A')
+        {
+            numLeft = A;
+        }
+        else if (heap == 'B')
+        {
+            numLeft = B;
+        }
+        else if (heap == 'C')
+        {
+            numLeft = C;
         }
         cout << "Player " << player << " please select the number of coins to remove (1, 2 or 3): ";
+
         cin >> numOfCoins;
+        while (numOfCoins == 0 || numOfCoins > 3 || numOfCoins > numLeft)
+        {
+            cout << "Invalid Input" << endl;
+            cout << "Player " << player << " please select the number of coins to remove (1, 2 or 3):  ";
+            cin >> numOfCoins;
+        }
+
         cout << "Player " << player << " removes " << numOfCoins << " coin(s) from heap " << heap << endl;
         rounds++;
         // count logic
@@ -51,6 +96,7 @@ int main(int argc, char const *argv[])
             cout << "Invalid input" << endl;
         }
     }
+    cout << "Player " << player << " removes the last coin. Player " << player << " wins the game!" << endl;
 
     return 0;
 }
