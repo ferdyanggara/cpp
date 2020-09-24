@@ -69,7 +69,7 @@ int main(int argc, char const *argv[])
         cout << "Player " << player << " please select the number of coins to remove (1, 2 or 3): ";
 
         cin >> numOfCoins;
-        while (numOfCoins == 0 || numOfCoins > 3 || numOfCoins > numLeft)
+        while (numOfCoins <= 0 || numOfCoins > 3 || numOfCoins > numLeft)
         {
             cout << "Invalid Input" << endl;
             cout << "Player " << player << " please select the number of coins to remove (1, 2 or 3):  ";
@@ -77,6 +77,7 @@ int main(int argc, char const *argv[])
         }
 
         cout << "Player " << player << " removes " << numOfCoins << " coin(s) from heap " << heap << endl;
+        cout << endl;
         rounds++;
         // count logic
         if (heap == 'A')
