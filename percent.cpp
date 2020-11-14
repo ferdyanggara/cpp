@@ -52,16 +52,16 @@ int minStringPercent(const char str[], int strPos){
     return minStringPercent(str, strPos + 1) + 1;
 }
 
-bool checkOneCharWildcard(const char str[], const char pattern[], int strPos, int patPos){
-    if(str[strPos] == NULL_CHAR)
-        return false;
+// bool checkOneCharWildcard(const char str[], const char pattern[], int strPos, int patPos){
+//     if(str[strPos] == NULL_CHAR)
+//         return false;
     
-    if(pattern[patPos] == QMARK)
-        return checkOneCharWildcard(str, pattern, strPos + 1, patPos + 1);
-    if(pattern[patPos] == str[strPos])
-        return true;
-    return false;
-}
+//     if(pattern[patPos] == QMARK)
+//         return checkOneCharWildcard(str, pattern, strPos + 1, patPos + 1);
+//     if(pattern[patPos] == str[strPos])
+//         return true;
+//     return false;
+// }
 
 int getOffsetWildCard(const char str[], const char pattern[], int strPos, int patPos){
     // cout << "Nstr: " << str[strPos] << endl;
@@ -87,7 +87,7 @@ int findSubLenAtStrPosWithPercent(const char str[], const char pattern[], int st
 {
     cout << "str: " << str[strPos] << ", pat: " << pattern[patPos] << endl;
     if(pattern[patPos] == NULL_CHAR)
-        return NOT_FOUND;
+        return 0;
 
     if(str[strPos] == NULL_CHAR){
         if(pattern[patPos] != NULL_CHAR && !checkPercentMark(pattern, patPos))
@@ -111,20 +111,26 @@ int findSubLenAtStrPosWithPercent(const char str[], const char pattern[], int st
             return minStringPercent(str, strPos);
         }
 
+        // pattern : c%%%%%%%%%%%%%%%%%p === c%p
+        // str: cp
+
+
         if(pattern[patPos + 1] == PERCENT)
             return findSubLenAtStrPosWithPercent(str, pattern, strPos, patPos + 1);
 
-        // determine whether percent is zero or more character wildcard        
+        // determine whether percent is zero or more character wildcard   
+        // offset is number of chars in between      
         int offset = getOffsetWildCard(str, pattern, strPos, patPos);
 
         if(offset == NOT_FOUND)
             return NOT_FOUND;
 
-        if(!offset){
+        // offset == 0
+        if(!offset){ 
             cout << "zero char" << endl;
             return findSubLenAtStrPosWithPercent(str, pattern, strPos, patPos + 1);
         }
-        
+
         // cout << "offset: " << offset << endl;
         int result = findSubLenAtStrPosWithPercent(str, pattern, strPos + offset, patPos + 1);
         if(result != NOT_FOUND)
@@ -162,7 +168,7 @@ int main(){
     // index = matchSubWithPercent("ilolol", "%ol", length); // 0 and 6
     // index = matchSubWithPercent("ilolol", "lo%", length); // 1 and 5
     // index = matchSubWithPercent("lol", "w%w", length); // NOT_FOUND and 0
-    index = matchSubWithPercent("something", "%%%s%%t%h", length); // 0 and 6
+    // index = matchSubWithPercent("something", "%%%s%%t%h", length); // 0 and 6
 
 
     cout << "Index: " << index << endl;

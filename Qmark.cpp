@@ -72,9 +72,9 @@ int minString(const char str[], const char pattern[], int strPos, int patPos){
 
 int findSubLenAtStrPosWithQmark(const char str[], const char pattern[], int strPos = 0, int patPos = 0)
 {
-    cout << "str: " << str[strPos] << ", pat: " << pattern[patPos] << endl;
+    // cout << "str: " << str[strPos] << ", pat: " << pattern[patPos] << endl;
     if(pattern[patPos] == NULL_CHAR)
-        return NOT_FOUND;
+        return 0;
 
     if(str[strPos] == NULL_CHAR){
         if(pattern[patPos] != NULL_CHAR && !checkQuestionMark(pattern, patPos))
@@ -82,6 +82,7 @@ int findSubLenAtStrPosWithQmark(const char str[], const char pattern[], int strP
         return 0;
     }
 
+    //case 1: when chars in strPos and patPos are the same
     if (pattern[patPos] == str[strPos])
     {
         if (pattern[patPos + 1] == NULL_CHAR) // the entire pattern is matched
@@ -92,6 +93,7 @@ int findSubLenAtStrPosWithQmark(const char str[], const char pattern[], int strP
         if (result != NOT_FOUND) // only return a match when the entire pattern is matched
             return 1 + result;
     }
+    //case 2: when we encounter the qmark
     else if(pattern[patPos] == QMARK){
         //determine whether ? is zero-character or 1 character wildcarc
         
@@ -99,8 +101,9 @@ int findSubLenAtStrPosWithQmark(const char str[], const char pattern[], int strP
         if(checkQuestionMark(pattern, patPos))
             return minString(str, pattern, strPos, patPos);
 
-        
+        // assume that qmark is zero-char wildcard
         int prelimResult = findSubLenAtStrPosWithQmark(str, pattern, strPos, patPos + 1);
+        // if the qmark is a one-char wilcard
         if(prelimResult == NOT_FOUND){
             int result = findSubLenAtStrPosWithQmark(str, pattern, strPos + 1, patPos + 1);
             if(result != NOT_FOUND)
@@ -113,10 +116,11 @@ int findSubLenAtStrPosWithQmark(const char str[], const char pattern[], int strP
         
 
         //otherwise, current questionmark is zero wildcard
-        cout << "zeroChar" << endl;
+        // cout << "zeroChar" << endl;
     }
 
     // cout << "NOt Found !" << endl;
+    // case 3: chars are different
     return NOT_FOUND;
 }
 
@@ -140,7 +144,7 @@ int main(){
     int index;
 
     // length = findSubLenAtStrPosWithQmark("pp", "?pp");
-    // index = matchSubWithQmark("l", "?", length); // 0 and 1
+    // index = matchSubWithQmark("lj", "?", length); // 0 and 1
     // index = matchSubWithQmark("ilolol", "?ol", length); // 1 and 3
     // index = matchSubWithQmark("ilolol", "?ilo", length); // 0 and 3
     // index = matchSubWithQmark("iloolol", "lol?", length); // 4 and 3
@@ -151,6 +155,9 @@ int main(){
     // index = matchSubWithQmark("comp", "???c????", length);
     // length = findSubLenAtStrPosWithQmark("c", "c????p");
     // length = findSubLenAtStrPosWithQmark("idkk", "???k?");
+
+    // length = findSubLenAtStrPosWithQmark("pp", "?pp");
+
 
     cout << "Index: " << index << endl;
     cout << "Length: " << length << endl;
